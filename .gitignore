@@ -1,2 +1,22 @@
+# Environment
 .env
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
 venv/
+
+# Logs
+logs/
+
+# Data (learning loop memory — may contain personal feedback)
+data/learning_loop_memory.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
