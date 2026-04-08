@@ -1,35 +1,72 @@
-# CrowdWisdom Trading Advisor
+# 📈 CrowdWisdom Trading Agent API
 
-A modular, multi-agent AI system designed to analyze prediction markets (Polymarket & Kalshi), enrich data using Agentic RAG, and provide personalized copy-trading recommendations based on a closed-learning loop memory system.
+A multi-agent AI system designed for prediction market analysis. This project scouts top-performing traders on Polymarket and Kalshi, enriches the data with live web context via Apify, and synthesizes copy-trading strategies using OpenRouter LLMs.
 
-This project was built as an internship assessment for CrowdWisdomTrading.
+## 🚀 Features
+* **Multi-Agent Architecture:** Modular scout agents for Polymarket (Gamma API) and Kalshi.
+* **Retrieval-Augmented Generation (RAG):** Integrates Apify's Google Search Scraper for live real-world context on market events.
+* **FastAPI Backend:** Fully interactive API with automatic Swagger UI documentation.
+* **Interactive CLI Mode:** For quick terminal-based testing and interaction.
+* **Closed Learning Loop:** Memory persistence to track feedback and improve future advice.
 
-## 🧠 System Architecture
+## 📂 Project Structure
 
-The project architecture is heavily inspired by the **Hermes Agent** framework, separating tool execution, LLM orchestration, and persistent memory into distinct, scalable modules.
+```text
+CROWDWISDOM-TRADING-AGENT/
+├── crowdwisdom_agent/
+│   ├── agents/               # Core agent logic
+│   │   ├── chat_agent.py     # Main orchestrator
+│   │   ├── kalshi_agent.py   # Kalshi API scout
+│   │   ├── niche_agent.py    # LLM-based niche classifier
+│   │   ├── polymarket_agent.py # Polymarket Gamma API scout
+│   │   └── rag_agent.py      # Apify web enrichment
+│   ├── api/                  # FastAPI endpoints
+│   │   └── routes.py         
+│   ├── core/                 # Shared utilities and configuration
+│   │   ├── llm_client.py     # OpenRouter client wrapper
+│   │   ├── logger.py         # Centralized logging
+│   │   └── memory.py         # Learning loop persistence
+│   ├── data/                 # Runtime data storage
+│   ├── logs/                 # Application log files
+│   ├── main.py               # Entry point (API & CLI)
+│   └── requirements.txt      # Python dependencies
+└── README.md
 
-The system utilizes a team of specialized agents:
-1. **Scout Agents (`tools.py`):** Dedicated functions to extract top-performing, consistent wallets from Polymarket and Kalshi.
-2. **Niche Agent (`agent.py`):** An LLM-powered classifier that analyzes a wallet's recent trade history to categorize their specific market niche (e.g., Sports, Politics, Crypto).
-3. **RAG Agent (`tools.py`):** Utilizes the Apify Google Search Scraper API to fetch live, real-world context about the user's target event.
-4. **Chat Advisor (`agent.py`):** The central orchestrator that synthesizes the scraped web data and the mapped trader profiles to deliver a final recommendation.
+```
 
-## 🔄 The Closed Learning Loop
-
-To fulfill the requirement of a "closed learning loop," this system implements persistent memory tracking via `learning_loop_memory.json`. 
-
-After every recommendation, the system prompts the user for feedback. This feedback is saved locally and dynamically injected into the Chat Agent's system prompt during all future interactions. This allows the agent to self-correct its copy-trading strategies and adapt to the user's risk tolerance over time without requiring manual code updates.
-
-## 🛠️ Technology Stack
-
-* **Language:** Python 3.10+
-* **LLM Provider:** OpenRouter API (`meta-llama/llama-3.3-70b-instruct`)
-* **RAG / Web Scraping:** Apify Client (`apify/google-search-scraper`)
-* **Architecture:** Modular Agentic Framework
-
-## 🚀 Quick Start Guide
-
+## 🛠️ Setup & Installation
 ### 1. Clone the repository
 ```bash
-git clone [https://github.com/YOUR-USERNAME/crowdwisdom-trading-agent.git](https://github.com/YOUR-USERNAME/crowdwisdom-trading-agent.git)
+git clone [https://github.com/ananya0-0/crowdwisdom-trading-agent.git](https://github.com/ananya0-0/crowdwisdom-trading-agent.git)
 cd crowdwisdom-trading-agent
+```
+### 2. Set up the virtual environment
+```bash
+python -m venv venv
+# On Windows:
+.\venv\Scripts\activate
+# On Mac/Linux:
+source venv/bin/activate
+```
+### 3. Install dependencies
+```bash
+pip install -r requirements.txt
+```
+### 4. Environment Variables
+```bash
+OPENROUTER_API_KEY=your_openrouter_key_here
+APIFY_API_TOKEN=your_apify_token_here
+```
+
+## 💻 Usage
+### Option 1: Run the API Server
+```bash
+python main.py
+```
+### Option 2: Run the CLI
+```bash
+python main.py --cli
+```
+
+
+
